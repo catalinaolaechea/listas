@@ -1,0 +1,82 @@
+#include <iostream>
+
+using namespace std;
+/*Realice un procedimiento o función que al recibir dos listas como parámetro, devuelva
+una tercer lista que concatene las mismas.*/
+struct nodoListas
+{
+    int info;
+    nodoListas*sig;
+
+};
+void insertarAtras(nodoListas*&lista, int dato)
+{
+    nodoListas*nuevo=new nodoListas();
+    nuevo->info=dato;
+    if(lista==NULL)
+    {
+        lista=nuevo;
+    }
+    else
+    {
+        nodoListas*aux;
+        aux=lista;
+        while(aux->sig!=NULL)
+        {
+            aux->sig=nuevo;
+        }
+    }
+    nuevo->sig=NULL;
+}
+void agregarDelante(nodoListas*&Lista,int dato)
+{
+    nodoListas*nuevo=new nodoListas();
+    nuevo->info=dato;
+    nuevo->sig=Lista;
+    Lista=nuevo;
+}
+void recorrerLista(nodoListas*Lista1)
+{
+    nodoListas*aux;
+    aux=Lista1;
+    while(aux!= NULL)
+    {
+        cout<<aux->info<<endl;
+        aux=aux->sig;
+    }
+}
+void unificarListas(nodoListas*lista,nodoListas*lista2, nodoListas*&lista3)
+{
+    while (lista!=NULL)
+    {
+        insertarAtras(lista3, lista->info);
+        if (lista2!=NULL)
+        {
+            insertarAtras(lista3, lista2->info);
+            lista2=lista2->sig;
+        }
+        lista= lista->sig;
+    }
+    while (lista2!=NULL)
+    {
+        insertarAtras(lista3, lista2->info);
+        lista2=lista2->sig;
+    }
+}
+
+int main()
+{
+    nodoListas*Lista1=NULL;
+    nodoListas*Lista2=NULL;
+    nodoListas*Lista3=NULL;
+    agregarDelante(Lista1,5);
+    agregarDelante(Lista1,6);
+    agregarDelante(Lista1,99);
+    agregarDelante(Lista2,3);
+    agregarDelante(Lista2,7);
+    agregarDelante(Lista2,44);
+    cout<<"unificar listas"<<endl;
+    unificarListas(Lista3,Lista1,Lista2);
+    recorrerLista(Lista3);
+    return 0;
+}
